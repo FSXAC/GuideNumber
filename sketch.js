@@ -66,13 +66,25 @@ function setup() {
     fill(255);
 
     let isoElement = document.getElementById("isoInput");
+    // Load stored ISO value if exists
+    if (localStorage.getItem("iso")) {
+        iso = parseInt(localStorage.getItem("iso"));
+        isoElement.value = iso;
+    }
     isoElement.addEventListener("input", () => {
         iso = parseInt(isoElement.value) || 100;
+        localStorage.setItem("iso", iso);
     });
 
     let diffuserElement = document.getElementById("diffuserCheck");
+    // Load stored diffuser value if exists
+    if (localStorage.getItem("use_diffuser")) {
+        use_diffuser = (localStorage.getItem("use_diffuser") === "true");
+        diffuserElement.checked = use_diffuser;
+    }
     diffuserElement.addEventListener("change", () => {
         use_diffuser = diffuserElement.checked;
+        localStorage.setItem("use_diffuser", use_diffuser);
     });
 }
 
