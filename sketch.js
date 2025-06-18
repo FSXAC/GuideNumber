@@ -60,7 +60,8 @@ function windowResized() {
 }
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    let cnv = createCanvas(windowWidth, windowHeight);
+    cnv.parent("canvas"); // attach to the <canvas id="canvas"> element
     background(0);
     noStroke();
     fill(255);
@@ -209,7 +210,7 @@ function mouseReleased() {
 
 function touchStarted() {
     isPointerDown = true;
-    return false; // Prevent default scrolling
+    // return false; // Prevent default scrolling
 }
 
 function touchMoved() {
@@ -220,10 +221,10 @@ function touchMoved() {
         current_power_setting = int(map(touches[0].x, margin, width - margin, 0, power_settings.length - 1));
         current_power_setting = constrain(current_power_setting, 0, power_settings.length - 1);
     }
-    return false;
+    // return false;
 }
 
 function touchEnded() {
     isPointerDown = false;
-    return false;
+    // return false;
 }

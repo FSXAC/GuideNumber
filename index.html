@@ -12,21 +12,32 @@
 <style>
 body { 
     overflow: hidden;
+    margin: 0;
 }
 .control {
     color: white;
-    padding-left: 10px;
+    padding: 10px;
+    background: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+/* The canvas container takes full width and appears below the control bar */
+#canvas {
+    display: block;
 }
 </style>
 </head>
 <body>
-<script src="sketch.js"></script>
-<div class="control" style="position: absolute; top: 10px;">
+<div class="control">
     <label for="isoInput">ISO:</label>
-    <input id="isoInput" type="number" value="100" min="100" step="100">
-    <br>
+    <input id="isoInput" type="number" value="100" min="100" style="width: 80px;">
     <label for="diffuserCheck">Diffuser:</label>
     <input id="diffuserCheck" type="checkbox" checked>
 </div>
+<div id="canvas"></div>
+<script src="sketch.js"></script>
 </body>
 </html>
