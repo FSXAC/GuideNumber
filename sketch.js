@@ -46,7 +46,7 @@ let aperture_steps = [
 
 let guide_number = 10; // 10 m @ ISO 100 @ 1.0 power
 let iso = 800;
-let use_diffuser = false; // if true, the guide number is reduced by 1 stop
+let use_diffuser = true; // if true, the guide number is reduced by 1 stop
 
 let current_distance_setting = 0;
 let current_power_setting = 0;
@@ -72,7 +72,8 @@ function compute_aperture(power, distance) {
 
     // for every doubling of iso, guide number increases by 1 stop
     // so iso 200 mult GN by 1.4142
-    let iso_mult = Math.sqrt(iso / 100); // ISO 100 is the base
+    // let iso_mult = Math.sqrt(iso / 100); // ISO 100 is the base
+    let iso_mult = Math.pow(2, (Math.log2(iso / 100))); // ISO 100 is the base
 
     return (guide_number * iso_mult * diffuser_mult * power) / (distance);
 
@@ -83,6 +84,8 @@ function draw() {
 
     if (is_under_exposed) {
         background(50, 0, 0);
+    } else if (is_over_exposed) {
+        background(0, 0, 50);
     } else {
         background(0);
     }
@@ -90,6 +93,8 @@ function draw() {
     // Draw distance slider
     if (is_under_exposed) {
         fill(150, 0, 0);
+    } else if (is_over_exposed) {
+        fill(0, 0, 150);
     } else {
         fill(88);
     }
@@ -140,7 +145,6 @@ function draw() {
     is_under_exposed = false;
     is_over_exposed = false;
     let aperture = aperture_steps[0];
-
     if (calculated_aperture < aperture_steps[0]) {
         is_under_exposed = true;
         aperture = aperture_steps[0];
@@ -179,4 +183,25 @@ function mousePressed() {
 
 function mouseReleased() {
     isPointerDown = false;
+}
+
+function touchStarted() {
+    isPointerDown = true;
+    return false; // Prevent default scrolling
+}
+
+function touchMoved() {
+    if (isPointerDown) {
+        let margin = 0.1 * max(width, height);
+        current_distance_setting = int(map(touches[0].y, height - margin, margin, 0, distance_settings.length - 1));
+        current_distance_setting = constrain(current_distance_setting, 0, distance_settings.length - 1);
+        current_power_setting = int(map(touches[0].x, margin, width - margin, 0, power_settings.length - 1));
+        current_power_setting = constrain(current_power_setting, 0, power_settings.length - 1);
+    }
+    return false;
+}
+
+function touchEnded() {
+    isPointerDown = false;
+    return false;
 }
