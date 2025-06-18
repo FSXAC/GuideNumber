@@ -14,9 +14,20 @@ body {
     font-family: 'Jersey 10', sans-serif;
     overflow: hidden;
 }
+.control {
+    color: white;
+    padding-left: 10px;
+}
 </style>
 </head>
 <body>
 <script src="sketch.js"></script>
+<div class="control" style="position: absolute; top: 10px;">
+    <label for="isoInput">ISO:</label>
+    <input id="isoInput" type="number" value="100" min="100" step="100">
+    <br>
+    <label for="diffuserCheck">Diffuser:</label>
+    <input id="diffuserCheck" type="checkbox" checked>
+</div>
 </body>
 </html>

@@ -64,6 +64,16 @@ function setup() {
     background(0);
     noStroke();
     fill(255);
+
+    let isoElement = document.getElementById("isoInput");
+    isoElement.addEventListener("input", () => {
+        iso = parseInt(isoElement.value) || 100;
+    });
+
+    let diffuserElement = document.getElementById("diffuserCheck");
+    diffuserElement.addEventListener("change", () => {
+        use_diffuser = diffuserElement.checked;
+    });
 }
 
 function compute_aperture(power, distance) {
@@ -111,13 +121,13 @@ function draw() {
     text(distance_settings_labels[current_distance_setting], width / 2, height / 2 + 80);
 
     // Display ISO
-    textSize(24);
-    textAlign(LEFT, TOP);
-    text("ISO: " + iso, 10, 10);
+    // textSize(24);
+    // textAlign(LEFT, TOP);
+    // text("ISO: " + iso, 10, 10);
 
     // Display diffuser status
-    text("Diffuser: " + (use_diffuser ? "ON" : "OFF"), 10, 40);
-    text("Guide Number: " + (use_diffuser ? guide_number / 2 : guide_number), 10, 70);
+    // text("Diffuser: " + (use_diffuser ? "ON" : "OFF"), 10, 40);
+    // text("Guide Number: " + (use_diffuser ? guide_number / 2 : guide_number), 10, 70);
 
     // Display the current power setting
     // Draw dots for power settings
